@@ -6,7 +6,7 @@
 #    By: radandri <radandri@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/05 15:34:36 by radandri          #+#    #+#              #
-#    Updated: 2025/09/14 00:59:46 by radandri         ###   ########.fr        #
+#    Updated: 2025/09/14 01:51:36 by radandri         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,8 +41,16 @@ $(MLX42_LIB):
 	cmake --build $(MLX42_DIR)build
 
 submodules:
-	git submodule init
-	git submodule update --recursive
+	@if [ ! -f "$(MLX42_DIR)/CMakeLists.txt" ]; then \
+		echo "Submodule 'mlx42' is missing. Initializing..."; \
+		git submodule update --init --recursive > /dev/null 2>&1 || { \
+			echo "  Failed to fetch 'mlx42'. You may try:"; \
+			echo "   git submodule add https://github.com/codam-coding-college/MLX42.git mlx42"; \
+			exit 1; \
+		}; \
+	else \
+		echo "Submodule 'mlx42' already present."; \
+	fi
 	
 clean:
 	make -C $(LIBFT_DIR) clean
