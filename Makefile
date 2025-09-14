@@ -6,7 +6,7 @@
 #    By: radandri <radandri@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/05 15:34:36 by radandri          #+#    #+#              #
-#    Updated: 2025/09/14 01:51:36 by radandri         ###   ########.fr        #
+#    Updated: 2025/09/14 02:00:54 by radandri         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,5 +59,7 @@ clean:
 fclean: clean
 	make -C $(LIBFT_DIR) fclean
 	rm -rf $(NAME)
+
+re: fclean all
 
 .PHONY: all clean fclean submodules
