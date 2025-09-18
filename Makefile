@@ -6,7 +6,7 @@
 #    By: radandri <radandri@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/05 15:34:36 by radandri          #+#    #+#              #
-#    Updated: 2025/09/14 02:00:54 by radandri         ###   ########.fr        #
+#    Updated: 2025/09/18 23:22:15 by radandri         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,7 @@ submodules:
 		echo "Submodule 'mlx42' is missing. Initializing..."; \
 		git submodule update --init --recursive > /dev/null 2>&1 || { \
 			echo "  Failed to fetch 'mlx42'. You may try:"; \
-			echo "   git submodule add https://github.com/codam-coding-college/MLX42.git mlx42"; \
+			echo "   git submodule add https://github.com/42paris/minilibx-linux minilibx"; \
 			exit 1; \
 		}; \
 	else \
