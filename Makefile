@@ -6,7 +6,7 @@
 #    By: radandri <radandri@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/05 15:34:36 by radandri          #+#    #+#              #
-#    Updated: 2025/09/19 22:09:15 by radandri         ###   ########.fr        #
+#    Updated: 2025/09/19 22:28:36 by radandri         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ LIBFT = $(LIBFT_DIR)libft.a
 MINILIBX_LIB = $(MINILIBX_DIR)libmlx.a
 LIBS = -L$(MINILIBX_DIR) -lmlx -lXext -lX11 -lm
 
-all: submodules $(NAME)
+all: $(NAME)
 
 $(NAME): $(OBJ) $(LIBFT) $(MINILIBX_LIB)
 	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(MINILIBX_LIB) -o $(NAME) $(LIBS)
@@ -36,19 +36,15 @@ $(NAME): $(OBJ) $(LIBFT) $(MINILIBX_LIB)
 $(LIBFT):
 	make -C $(LIBFT_DIR)
 
-$(MINILIBX_LIB):
+$(MINILIBX_LIB): $(MINILIBX_DIR)
 	$(MAKE) -C $(MINILIBX_DIR)
 
-submodules:
-	@if [ ! -f "$(MINILIBX_DIR)/Makefile" ]; then \
-		echo "Submodule 'minilibx' is missing. Initializing..."; \
-		git submodule update --init --recursive > /dev/null 2>&1 || { \
-			echo "  Failed to fetch 'minilibx'. You may try:"; \
-			echo "   git submodule add https://github.com/42paris/minilibx-linux minilibx"; \
-			exit 1; \
-		}; \
+$(MINILIBX_DIR):
+	@if [ ! -d "$(MINILIBX_DIR)" ]; then \
+		echo "Cloning minilibx..."; \
+		git clone https://github.com/42Paris/minilibx-linux.git $(MINILIBX_DIR); \
 	else \
-		echo "Submodule 'minilibx' already present."; \
+		echo "minilibx already present."; \
 	fi
 	
 clean:
