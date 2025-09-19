@@ -6,7 +6,7 @@
 #    By: radandri <radandri@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/05 15:34:36 by radandri          #+#    #+#              #
-#    Updated: 2025/09/18 23:22:15 by radandri         ###   ########.fr        #
+#    Updated: 2025/09/19 22:09:15 by radandri         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,20 +15,20 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror -Ofast -ffast-math -march=native -funroll-loops -mtune=native -O3 -mavx2 -mfma
 
 LIBFT_DIR = libft/
-MLX42_DIR = mlx42/
-INCLUDES = -I include/ -I $(LIBFT_DIR) -I $(MLX42_DIR)include/
+MINILIBX_DIR = minilibx/
+INCLUDES = -I include/ -I $(LIBFT_DIR) -I $(MINILIBX_DIR)include/
 
 SRC = main.c
 OBJ= $(SRC:.c=.o)
 
 LIBFT = $(LIBFT_DIR)libft.a
-MLX42_LIB = $(MLX42_DIR)build/libmlx42.a
-LIBS = -L$(MLX42_DIR)build -lglfw -lGL -ldl -lm -lpthread
+MINILIBX_LIB = $(MINILIBX_DIR)libmlx.a
+LIBS = -L$(MINILIBX_DIR) -lmlx -lXext -lX11 -lm
 
 all: submodules $(NAME)
 
-$(NAME): $(OBJ) $(LIBFT) $(MLX42_LIB)
-	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(MLX42_LIB) -o $(NAME) $(LIBS)
+$(NAME): $(OBJ) $(LIBFT) $(MINILIBX_LIB)
+	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(MINILIBX_LIB) -o $(NAME) $(LIBS)
 
 %.o: %.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
@@ -36,20 +36,19 @@ $(NAME): $(OBJ) $(LIBFT) $(MLX42_LIB)
 $(LIBFT):
 	make -C $(LIBFT_DIR)
 
-$(MLX42_LIB):
-	cmake -B $(MLX42_DIR)build -S $(MLX42_DIR)
-	cmake --build $(MLX42_DIR)build
+$(MINILIBX_LIB):
+	$(MAKE) -C $(MINILIBX_DIR)
 
 submodules:
-	@if [ ! -f "$(MLX42_DIR)/CMakeLists.txt" ]; then \
-		echo "Submodule 'mlx42' is missing. Initializing..."; \
+	@if [ ! -f "$(MINILIBX_DIR)/Makefile" ]; then \
+		echo "Submodule 'minilibx' is missing. Initializing..."; \
 		git submodule update --init --recursive > /dev/null 2>&1 || { \
-			echo "  Failed to fetch 'mlx42'. You may try:"; \
+			echo "  Failed to fetch 'minilibx'. You may try:"; \
 			echo "   git submodule add https://github.com/42paris/minilibx-linux minilibx"; \
 			exit 1; \
 		}; \
 	else \
-		echo "Submodule 'mlx42' already present."; \
+		echo "Submodule 'minilibx' already present."; \
 	fi
 	
 clean:
