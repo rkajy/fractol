@@ -1,1 +1,18 @@
 # fractol
+
+Mandelbrot
+Z(n+1) = Z(n) +c
+
+
+Julia
+Creal = -0.745429
+Cimaginary = 0.05
+
+
+Burning Ship
+Z(n+1) = abs(Z(n)) + c
+
+
+Documentation:
+
+[harm](https://harm-smits.github.io/42docs/libs/minilibx)
