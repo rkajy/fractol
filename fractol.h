@@ -18,13 +18,14 @@
 #include <unistd.h> // write
 #include <math.h>
 #include "minilibx/mlx.h"
-
+#include <errno.h>
+#include <stdio.h> // perror
 
 #define ERROR_MESSAGE "Please enter \n\t\"./fractol mandelbrot\" or \n\t\"./fractol julia <value_1> <value_2>\"\n"
 
 // we use a square to keep the rendering math simple
-#define WITH    800
-#define HEIGH   800
+#define WIDTH    800
+#define HEIGHT   800
 
 /*
 *this is basically a pixel buffer values from mlx_get_data_adr()
@@ -33,9 +34,9 @@ typedef struct s_img
 {
     void    *img_ptr; //pointer to image struct
     char    *pixels_ptr; //points to the actual pixels
-    int     bits_per_pixel; // how many bit we have on my pixel
+    int     bits_per_pixel; // how many bit we have in my pixel
     int     endian;
-    int     line_length
+    int     line_len;
 }   t_img;
 
 typedef struct s_fractal
@@ -48,5 +49,8 @@ typedef struct s_fractal
     
 }   t_fractal;
 
+
+void    fractal_init(t_fractal *fractal);
+void    fractal_render(t_fractal *fractal);
 
 #endif

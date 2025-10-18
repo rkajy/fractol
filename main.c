@@ -35,3 +35,5 @@ int	main(int argc, char *argv[])
 	}
 	return (0);
 }
+
+// gcc *c -Lminilibx -lmlx -lX11 -lXext libft/libft.a -o fractol

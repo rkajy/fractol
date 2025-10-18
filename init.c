@@ -1,15 +1,42 @@
 #include "fractol.h"
 
+static void malloc_error(void)
+{
+    perror("Problem with malloc");
+    exit(EXIT_FAILURE);
+}
+
 void    fractal_init(t_fractal *fractal)
 {
     fractal->mlx_connection = mlx_init();
     if(NULL == fractal->mlx_connection)
-    {
         malloc_error();
-        
-    }
     fractal->mlx_windows = mlx_new_window(
-        fractal->mlx_connection, mlx_ptr, WIDTH, size_x, HEIGHT, size_y , fractal->name);
+        fractal->mlx_connection, // mlx_ptr:
+        WIDTH, //size_x:
+        HEIGHT, //size_y:
+        fractal->name //title
+    );
 
-        void	*mlx_new_window(t_xvar *xvar,int size_x,int size_y,char *title)
+    if(NULL == fractal->mlx_windows)
+    {
+        mlx_destroy_display(fractal->mlx_connection);
+        free(fractal->mlx_connection);
+        malloc_error();
+    }
+    fractal->img.img_ptr = mlx_new_image(fractal->mlx_connection, WIDTH, HEIGHT);
+    if(NULL == fractal->img.img_ptr)
+    {
+        mlx_destroy_window(fractal->mlx_connection, fractal->mlx_windows); // mlx_ptr: win_ptr:
+        mlx_destroy_display(fractal->mlx_connection); // mlx_ptr:
+        free(fractal->mlx_connection); //ptr
+        malloc_error();
+    }
+    fractal->img.pixels_ptr = mlx_get_data_addr(fractal->img.img_ptr,
+    &fractal->img.bits_per_pixel,
+    &fractal->img.line_len,
+    &fractal->img.endian
+    );
+    //events_init(fractal);
+    //data_init(fractal);
 }

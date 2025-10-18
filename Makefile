@@ -18,14 +18,17 @@ LIBFT_DIR = libft/
 MINILIBX_DIR = minilibx/
 INCLUDES = -I include/ -I $(LIBFT_DIR) -I $(MINILIBX_DIR)include/
 
-SRC = main.c
+SRC = main.c \
+		init.c \
+		render.c \
+
 OBJ= $(SRC:.c=.o)
 
 LIBFT = $(LIBFT_DIR)libft.a
 MINILIBX_LIB = $(MINILIBX_DIR)libmlx.a
 LIBS = -L$(MINILIBX_DIR) -lmlx -lXext -lX11 -lm
 
-all: $(NAME)
+all: $(NAME) 
 
 $(NAME): $(OBJ) $(LIBFT) $(MINILIBX_LIB)
 	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(MINILIBX_LIB) -o $(NAME) $(LIBS)
@@ -37,7 +40,7 @@ $(LIBFT): $(LIBFT_DIR)
 	$(MAKE) -C $(LIBFT_DIR)
 
 $(MINILIBX_LIB): $(MINILIBX_DIR)
-	$(MAKE) -C $(MINILIBX_DIR)
+	$(MAKE) -C $(MINILIBX_DIR)       
 
 $(MINILIBX_DIR): $(MINILIBX_DIR)
 	@if [ ! -d "$(MINILIBX_DIR)" ]; then \
@@ -57,4 +60,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean submodules
+.PHONY: all clean fclean
