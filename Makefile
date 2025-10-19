@@ -6,7 +6,7 @@
 #    By: radandri <radandri@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/05 15:34:36 by radandri          #+#    #+#              #
-#    Updated: 2025/10/19 20:12:48 by radandri         ###   ########.fr        #
+#    Updated: 2025/10/20 01:31:24 by radandri         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,8 @@ INCLUDES = -I include/ -I $(LIBFT_DIR) -I $(MINILIBX_DIR)include/
 SRC = main.c \
 		init.c \
 		render.c \
-		math_utils.c
+		math_utils.c \
+		events.c
 
 OBJ= $(SRC:.c=.o)
 
@@ -29,7 +30,7 @@ LIBFT = $(LIBFT_DIR)libft.a
 MINILIBX_LIB = $(MINILIBX_DIR)libmlx.a
 LIBS = -L$(MINILIBX_DIR) -lmlx -lXext -lX11 -lm
 
-all: $(NAME) 
+all: $(MINILIBX_DIR) $(NAME) 
 
 $(NAME): $(OBJ) $(LIBFT) $(MINILIBX_LIB)
 	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(MINILIBX_LIB) -o $(NAME) $(LIBS)
@@ -43,7 +44,7 @@ $(LIBFT): $(LIBFT_DIR)
 $(MINILIBX_LIB): $(MINILIBX_DIR)
 	$(MAKE) -C $(MINILIBX_DIR)       
 
-$(MINILIBX_DIR): $(MINILIBX_DIR)
+$(MINILIBX_DIR):
 	@if [ ! -d "$(MINILIBX_DIR)" ]; then \
 		echo "Cloning minilibx..."; \
 		git clone https://github.com/42Paris/minilibx-linux.git $(MINILIBX_DIR); \
