@@ -6,7 +6,7 @@
 /*   By: radandri <radandri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 00:19:29 by radandri          #+#    #+#             */
-/*   Updated: 2025/10/16 03:21:17 by radandri         ###   ########.fr       */
+/*   Updated: 2025/10/19 19:15:34 by radandri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,29 @@
 #define WIDTH    800
 #define HEIGHT   800
 
+typedef struct s_complex
+{
+    double x; // real
+    double y; // imaginary
+} t_complex;
+
+// COLORS
+#define BLACK 0x000000 // RGB(0,0,0)
+#define WHITE 0xFFFFFF // RGB(255,255,255)
+#define RED   0xFF0000 // RGB(255,0,0)
+#define GREEN 0x00FF00 // RGB(0,255,0)
+#define BLUE  0x0000FF // RGB(0,0,255)
+
+// Psychedelic colors
+#define MAGENTA_BURST 0xFF00FF // RGB(255,0,255), A vibrant magenta
+#define LIME_SHOCK  0x00FF7F // RGB(0,255,127), A bright lime green
+#define NEON_ORANGE 0xFF4500 // RGB(255,69,0), A striking neon orange
+#define PSYCHEDELIC_PURPLE 0x8A2BE2 // RGB(138,43,226), A deep psychedelic purple
+#define AQUA_DREAM 0x00FFFF // RGB(0,255,255), A dreamy aqua blue
+#define HOT_PINK 0xFF69B4 // RGB(255,105,180), A hot pink shade
+#define ELECTRIC_BLUE 0x7DF9FF // RGB(125,249,255), An electric blue hue
+#define LAVA_RED 0xCF1020 // RGB(207,16,32), A fiery lava red
+
 /*
 *this is basically a pixel buffer values from mlx_get_data_adr()
 */
@@ -46,11 +69,14 @@ typedef struct s_fractal
     void        *mlx_windows;
     t_img       img;
 // Hooks member variable
-    
+    double escape_value; // hypotenuse
+    int iterations_definition; //value tight with the image quality and rendering speed
 }   t_fractal;
 
 
 void    fractal_init(t_fractal *fractal);
 void    fractal_render(t_fractal *fractal);
-
+double map(double unscaled_num, double new_min, double new_max, double old_min, double old_max);
+t_complex sum_complex(t_complex z1, t_complex z2);
+t_complex square_complex(t_complex z);
 #endif
