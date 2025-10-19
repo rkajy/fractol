@@ -10,7 +10,33 @@ void data_init(t_fractal *fractal)
 {
     fractal->escape_value = 4; // 2 ^ 2, my hypotenuse
     fractal->iterations_definition = 42;
+    fractal->shift_x = 0.0;
+    fractal->shift_y = 0.0;
+}
 
+static void events_init(t_fractal *fractal)
+{
+    mlx_hook(
+        fractal->mlx_windows,
+        KeyPress,
+        KeyPressMask,
+        key_handler,
+        fractal
+    );
+    mlx_hook(
+        fractal->mlx_windows,
+        ButtonPress,
+        ButtonPressMask,
+        mouse_handler,
+        fractal
+    );
+    mlx_hook(
+        fractal->mlx_windows,
+        DestroyNotify,
+        StructureNotifyMask,
+        close_handler,
+        fractal
+    );
 }
 
 void    fractal_init(t_fractal *fractal)
@@ -44,6 +70,6 @@ void    fractal_init(t_fractal *fractal)
     &fractal->img.line_len,
     &fractal->img.endian
     );
-    //events_init(fractal);
-    //data_init(fractal);
+    events_init(fractal);
+    data_init(fractal);
 }

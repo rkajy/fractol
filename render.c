@@ -29,8 +29,8 @@ static  void    handle_pixel(int x, int y, t_fractal *fractal)
     z.y = 0.0;
 
     // pixel coordinate x && y scaled to fit mandel needs
-    c.x = map(x, -2, +2, 0, WIDTH);
-    c.y = map(x, +2, -2, 0, HEIGHT);
+    c.x = map(x, -2, +2, 0, WIDTH) + fractal->shift_x;
+    c.y = map(y, +2, -2, 0, HEIGHT) + fractal->shift_y;
 
     // How many times you want to iterate z^2 + c to check if the pointer escaped?
     while(i < fractal->iterations_definition)
@@ -50,7 +50,7 @@ static  void    handle_pixel(int x, int y, t_fractal *fractal)
         ++i;
     }
     // We are in MANDELBROT given the iterations made
-    my_pixel_put(x, y, &fractal->img, PSYCHEDELIC_PURPLE);
+    my_pixel_put(x, y, &fractal->img, WHITE);
 
 }
 
@@ -68,5 +68,11 @@ void	fractal_render(t_fractal *fractal)
             handle_pixel(x, y, fractal);
         }
     }
-    
+    mlx_put_image_to_window(
+        fractal->mlx_connection,
+        fractal->mlx_windows,
+        fractal->img.img_ptr,
+        0,
+        0
+    );
 }
