@@ -6,7 +6,7 @@
 /*   By: radandri <radandri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 00:19:29 by radandri          #+#    #+#             */
-/*   Updated: 2025/10/20 01:26:17 by radandri         ###   ########.fr       */
+/*   Updated: 2025/10/20 23:55:55 by radandri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,19 @@ typedef struct s_fractal
     int     iterations_definition; //value tight with the image quality and rendering speed
     double shift_x;
     double shift_y;
+    double zoom;
+    double julia_x; // real part for julia
+    double julia_y; // imaginary part for julia
 }   t_fractal;
 
 //*** init ***
-void    fractal_init(t_fractal *fractal);
+void fractal_init(t_fractal *fractal);
+
+void is_null_img_ptr_checker(t_fractal *fractal);
+
+void is_null_mlx_connection_checker(t_fractal *fractal);
+
+void is_null_mlx_windows(t_fractal *fractal);
 
 //*** render */
 void    fractal_render(t_fractal *fractal);
@@ -91,4 +100,7 @@ t_complex square_complex(t_complex z);
 int key_handler(int keycode, t_fractal *fractal);
 int mouse_handler(int button, int x, int y, t_fractal *fractal);
 int close_handler(t_fractal *fractal);
+int julia_track(int x, int y, t_fractal *fractal);
+
+double atodouble(char *s);
 #endif

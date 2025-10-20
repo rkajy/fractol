@@ -6,7 +6,7 @@
 #    By: radandri <radandri@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/05 15:34:36 by radandri          #+#    #+#              #
-#    Updated: 2025/10/20 01:31:24 by radandri         ###   ########.fr        #
+#    Updated: 2025/10/20 16:20:22 by radandri         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,8 @@ SRC = main.c \
 		init.c \
 		render.c \
 		math_utils.c \
-		events.c
+		events.c \
+		atodouble.c
 
 OBJ= $(SRC:.c=.o)
 
