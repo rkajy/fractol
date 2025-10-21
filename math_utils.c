@@ -7,13 +7,17 @@ double scale(double unscaled_num, double new_min, double new_max, double old_min
 }
 
 /*
- * [0..799] -> [-2..+2]
- *
+** map_double value from [old_min, old_max] to [new_min, new_max]
 */
-double map(double unscaled_num, double new_min, double new_max, double old_min, double old_max)
+double map_double(double val, double old_min, double old_max, double new_min, double new_max)
 {
-    return (new_max - new_min) * (unscaled_num - old_min) / (old_max - old_min) + new_min;
+    double t;
+    if(old_max == old_min)
+        return new_min;
+    t = (val - old_min) / (old_max - old_min);
+    return new_min + t * (new_max - new_min);
 }
+
 // sum complex is fairly easy is vector addition
 t_complex sum_complex(t_complex z1, t_complex z2)
 {

@@ -6,7 +6,7 @@
 /*   By: radandri <radandri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 00:19:29 by radandri          #+#    #+#             */
-/*   Updated: 2025/10/21 10:30:01 by radandri         ###   ########.fr       */
+/*   Updated: 2025/10/21 20:01:44 by radandri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ typedef struct s_fractal
     void        *win;
     t_img       img;
 // Hooks member variable
-    double  escape_value; // hypotenuse
+    double  escape_sq; // hypotenuse
     int     max_iter; //value tight with the image quality and rendering speed
     double offset_x;
     double offset_y;
@@ -83,8 +83,6 @@ typedef struct s_fractal
     int type;
 }   t_fractal;
 
-//*** init ***
-void fractal_init(t_fractal *fractal);
 
 void is_null_img_ptr_checker(t_fractal *fractal);
 
@@ -92,21 +90,23 @@ void is_null_mlx_checker(t_fractal *fractal);
 
 void is_null_win(t_fractal *fractal);
 
-//*** render */
+
+
+void fractal_init(t_fractal *fractal);
 void    fractal_render(t_fractal *fractal);
-
-//*** math */
-double map(double unscaled_num, double new_min, double new_max, double old_min, double old_max);
-t_complex sum_complex(t_complex z1, t_complex z2);
-t_complex square_complex(t_complex z);
-
-//*** events */
+void my_pixel_put(int x, int y, t_img *img, int color);
 int key_handler(int keycode, t_fractal *fractal);
 int mouse_handler(int button, int x, int y, t_fractal *fractal);
 int close_handler(t_fractal *fractal);
 int julia_track(int x, int y, t_fractal *fractal);
+double map_double(double val, double old_min, double old_max, double new_min, double new_max);
+t_complex sum_complex(t_complex z1, t_complex z2);
+t_complex square_complex(t_complex z);
 
 double atodouble(char *s);
+
+int     mandelbrot_iter(double c_re, double c_im, int max_iter);
+int     julia_iter(double z_re, double z_im, double c_re, double c_im, int max_iter);
 
 int get_color(int iter, int max_iter);
 

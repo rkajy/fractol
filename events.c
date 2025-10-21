@@ -51,8 +51,8 @@ int key_handler(int keycode, t_fractal *fractal)
 int mouse_handler(int button, int x, int y, t_fractal *fractal)
 {
     // Convert mouse coordinates to complex plane coordinates
-    double mouse_real = map(x, -2, +2, 0, WIDTH) * fractal->zoom + fractal->offset_x;
-    double mouse_imag = map(y, +2, -2, 0, HEIGHT) * fractal->zoom + fractal->offset_y;
+    double mouse_real = map_double(x, -2, +2, 0, WIDTH) * fractal->zoom + fractal->offset_x;
+    double mouse_imag = map_double(y, +2, -2, 0, HEIGHT) * fractal->zoom + fractal->offset_y;
 
     //Zoom in (scroll up)
     if(button == Button4)
@@ -88,8 +88,8 @@ int julia_track(int x, int y, t_fractal *fractal)
 {
     if(!ft_strncmp(fractal->name, "julia", 5))
     {
-        fractal->julia_re = map(x, -2, +2, 0, WIDTH) * fractal->zoom + fractal->offset_x;
-        fractal->juliia_im = map(y, +2, -2, 0, HEIGHT) * fractal->zoom + fractal->offset_y;
+        fractal->julia_re = map_double(x, -2, +2, 0, WIDTH) * fractal->zoom + fractal->offset_x;
+        fractal->juliia_im = map_double(y, +2, -2, 0, HEIGHT) * fractal->zoom + fractal->offset_y;
         fractal_render(fractal);
     }
     return (0);
