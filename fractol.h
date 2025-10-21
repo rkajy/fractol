@@ -6,7 +6,7 @@
 /*   By: radandri <radandri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 00:19:29 by radandri          #+#    #+#             */
-/*   Updated: 2025/10/21 10:23:28 by radandri         ###   ########.fr       */
+/*   Updated: 2025/10/21 10:25:35 by radandri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ typedef struct s_fractal
 {
     char        *name;
     void        *mlx; // mlx_init()
-    void        *mlx_windows;
+    void        *win;
     t_img       img;
 // Hooks member variable
     double  escape_value; // hypotenuse
@@ -90,7 +90,7 @@ void is_null_img_ptr_checker(t_fractal *fractal);
 
 void is_null_mlx_checker(t_fractal *fractal);
 
-void is_null_mlx_windows(t_fractal *fractal);
+void is_null_win(t_fractal *fractal);
 
 //*** render */
 void    fractal_render(t_fractal *fractal);
