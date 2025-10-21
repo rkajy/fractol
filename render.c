@@ -91,7 +91,7 @@ void	fractal_render(t_fractal *fractal)
         }
     }
     mlx_put_image_to_window(
-        fractal->mlx_connection,
+        fractal->mlx,
         fractal->mlx_windows,
         fractal->img.img_ptr,
         0,

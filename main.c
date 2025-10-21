@@ -6,7 +6,7 @@
 /*   By: radandri <radandri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 00:21:24 by radandri          #+#    #+#             */
-/*   Updated: 2025/10/20 16:02:06 by radandri         ###   ########.fr       */
+/*   Updated: 2025/10/21 10:23:28 by radandri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	main(int argc, char *argv[])
 		}
 		fractal_init(&fractal);
         fractal_render(&fractal);
-        mlx_loop(fractal.mlx_connection);
+        mlx_loop(fractal.mlx);
 	
     }
 	else

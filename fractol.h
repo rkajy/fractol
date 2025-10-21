@@ -6,7 +6,7 @@
 /*   By: radandri <radandri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 00:19:29 by radandri          #+#    #+#             */
-/*   Updated: 2025/10/21 10:20:09 by radandri         ###   ########.fr       */
+/*   Updated: 2025/10/21 10:23:28 by radandri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ typedef struct s_img
 typedef struct s_fractal
 {
     char        *name;
-    void        *mlx_connection; // mlx_init()
+    void        *mlx; // mlx_init()
     void        *mlx_windows;
     t_img       img;
 // Hooks member variable
@@ -88,7 +88,7 @@ void fractal_init(t_fractal *fractal);
 
 void is_null_img_ptr_checker(t_fractal *fractal);
 
-void is_null_mlx_connection_checker(t_fractal *fractal);
+void is_null_mlx_checker(t_fractal *fractal);
 
 void is_null_mlx_windows(t_fractal *fractal);
 

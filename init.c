@@ -27,9 +27,9 @@ static void	events_init(t_fractal *fractal)
 	mlx_hook(fractal->mlx_windows, MotionNotify, PointerMotionMask, julia_track,
 		fractal);
 }
-void is_null_mlx_connection_checker(t_fractal *fractal)
+void is_null_mlx_checker(t_fractal *fractal)
 {
-    if (fractal->mlx_connection == NULL)
+    if (fractal->mlx == NULL)
         malloc_error();
 }
 
@@ -37,8 +37,8 @@ void is_null_mlx_windows_checker(t_fractal *fractal)
 {
     if (fractal->mlx_windows == NULL)
     {
-        mlx_destroy_display(fractal->mlx_connection);
-        free(fractal->mlx_connection);
+        mlx_destroy_display(fractal->mlx);
+        free(fractal->mlx);
         malloc_error();
     }
 }
@@ -47,11 +47,11 @@ void is_null_img_ptr_checker(t_fractal *fractal)
 {
     if (fractal->img.img_ptr == NULL)
     {
-        mlx_destroy_window(fractal->mlx_connection, fractal->mlx_windows);
+        mlx_destroy_window(fractal->mlx, fractal->mlx_windows);
         // mlx_ptr: win_ptr:
-        mlx_destroy_display(fractal->mlx_connection);
+        mlx_destroy_display(fractal->mlx);
         // mlx_ptr:
-        free(fractal->mlx_connection);
+        free(fractal->mlx);
         // ptr
         malloc_error();
     }
@@ -61,25 +61,25 @@ void is_null_img_pixels_ptr(t_fractal *fractal)
 {
     if (fractal->img.pixels_ptr == NULL)
     {
-        mlx_destroy_image(fractal->mlx_connection, fractal->img.img_ptr);
-        mlx_destroy_window(fractal->mlx_connection, fractal->mlx_windows);
-        mlx_destroy_display(fractal->mlx_connection);
-        free(fractal->mlx_connection);
+        mlx_destroy_image(fractal->mlx, fractal->img.img_ptr);
+        mlx_destroy_window(fractal->mlx, fractal->mlx_windows);
+        mlx_destroy_display(fractal->mlx);
+        free(fractal->mlx);
         malloc_error();
     }
 }
 
 void	fractal_init(t_fractal *fractal)
 {
-	fractal->mlx_connection = mlx_init();
-    is_null_mlx_connection_checker(fractal);
-    fractal->mlx_windows = mlx_new_window(fractal->mlx_connection, // mlx_ptr:
+	fractal->mlx = mlx_init();
+    is_null_mlx_checker(fractal);
+    fractal->mlx_windows = mlx_new_window(fractal->mlx, // mlx_ptr:
 											WIDTH,                   // size_x:
 											HEIGHT,                  // size_y:
 											fractal->name            // title
 	);
     is_null_mlx_windows_checker(fractal);
-    fractal->img.img_ptr = mlx_new_image(fractal->mlx_connection, WIDTH,
+    fractal->img.img_ptr = mlx_new_image(fractal->mlx, WIDTH,
 			HEIGHT);
     is_null_img_ptr_checker(fractal);
     fractal->img.pixels_ptr = mlx_get_data_addr(fractal->img.img_ptr,
