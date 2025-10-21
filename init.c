@@ -57,6 +57,18 @@ void is_null_img_ptr_checker(t_fractal *fractal)
     }
 }
 
+void is_null_img_pixels_ptr(t_fractal *fractal)
+{
+    if (fractal->img.pixels_ptr == NULL)
+    {
+        mlx_destroy_image(fractal->mlx_connection, fractal->img.img_ptr);
+        mlx_destroy_window(fractal->mlx_connection, fractal->mlx_windows);
+        mlx_destroy_display(fractal->mlx_connection);
+        free(fractal->mlx_connection);
+        malloc_error();
+    }
+}
+
 void	fractal_init(t_fractal *fractal)
 {
 	fractal->mlx_connection = mlx_init();
@@ -73,33 +85,8 @@ void	fractal_init(t_fractal *fractal)
     fractal->img.pixels_ptr = mlx_get_data_addr(fractal->img.img_ptr,
 			&fractal->img.bits_per_pixel, &fractal->img.line_len,
 			&fractal->img.endian);
-    //fractal->img.pixels_ptr = NULL;
-    if (fractal->img.pixels_ptr == NULL)
-    {
-        mlx_destroy_window(fractal->mlx_connection, fractal->mlx_windows);
-        mlx_destroy_display(fractal->mlx_connection);
-        free(fractal->mlx_connection);
-        malloc_error();
-    }
+    is_null_img_pixels_ptr(fractal);
 	events_init(fractal);
 	data_init(fractal);
 }
 
-
-
-// void *safe_malloc(size_t size)
-// {
-//     void *ptr;
-
-//     ptr = malloc(size);
-//     if (ptr == NULL)
-//         malloc_error();
-//     return (ptr);
-// }
-
-// int main(int argc, char *argv[])
-// {
-//     char *data;
-//     data = safe_malloc(sizeof(char) * 10);
-
-// }
