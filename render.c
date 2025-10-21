@@ -55,7 +55,7 @@ static  void    handle_pixel(int x, int y, t_fractal *fractal)
     mandel_vs_julia(&z, &c, fractal);
 
     // How many times you want to iterate z^2 + c to check if the pointer escaped?
-    while(i < fractal->iterations_definition)
+    while(i < fractal->max_iter)
     {
         //actual z^2 + c
         // z = z^2 +c
@@ -65,7 +65,7 @@ static  void    handle_pixel(int x, int y, t_fractal *fractal)
         // if hypotenuse > 2, I assume the point has escaped
         if((z.re * z.re) + (z.im * z.im) > fractal->escape_value)
         {
-            color = map(i, BLACK, WHITE, 0, fractal->iterations_definition);
+            color = map(i, BLACK, WHITE, 0, fractal->max_iter);
             my_pixel_put(x, y, &fractal->img, color);
             return;
         }

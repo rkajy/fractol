@@ -9,7 +9,7 @@ static void	malloc_error(void)
 void	data_init(t_fractal *fractal)
 {
 	fractal->escape_value = 4; // 2 ^ 2, my hypotenuse
-	fractal->iterations_definition = 42;
+	fractal->max_iter = 42;
 	fractal->shift_x = 0.0;
 	fractal->shift_y = 0.0;
 	// Zoom factor

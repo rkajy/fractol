@@ -6,7 +6,7 @@
 /*   By: radandri <radandri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 00:19:29 by radandri          #+#    #+#             */
-/*   Updated: 2025/10/21 10:11:44 by radandri         ###   ########.fr       */
+/*   Updated: 2025/10/21 10:20:09 by radandri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ typedef struct s_fractal
     t_img       img;
 // Hooks member variable
     double  escape_value; // hypotenuse
-    int     iterations_definition; //value tight with the image quality and rendering speed
+    int     max_iter; //value tight with the image quality and rendering speed
     double shift_x;
     double shift_y;
     double zoom;

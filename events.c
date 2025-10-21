@@ -35,11 +35,11 @@ int key_handler(int keycode, t_fractal *fractal)
     }
     else if(keycode == XK_plus)
     {
-        fractal->iterations_definition += 10;
+        fractal->max_iter += 10;
     }
     else if(keycode == XK_minus)
     {
-        fractal->iterations_definition -= 10;
+        fractal->max_iter -= 10;
     }
 
     // Re-render the fractal after handling the key event
