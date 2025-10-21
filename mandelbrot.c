@@ -1,7 +1,7 @@
 #include "fractol.h"
 
 // z = z^2 + c
-int mandelbrot(double x, double y, int max_iter)
+int mandelbrot_iter(double x, double y, int max_iter)
 {
     double zx = 0.0;
     double zy = 0.0;

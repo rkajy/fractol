@@ -6,7 +6,7 @@
 #    By: radandri <radandri@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/05 15:34:36 by radandri          #+#    #+#              #
-#    Updated: 2025/10/21 09:59:36 by radandri         ###   ########.fr        #
+#    Updated: 2025/10/21 23:49:22 by radandri         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,8 @@ SRC = main.c \
 		atodouble.c \
 		color.c \
 		julia.c \
-		mandelbrot.c
+		mandelbrot.c \
+		render_helpers.c
 
 OBJ= $(SRC:.c=.o)
 

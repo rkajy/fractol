@@ -1,7 +1,7 @@
 #include "fractol.h"
 
 // zx et zy correspondent au pixel courant
-int julia(double zx, double zy, double c_re, double c_im, int max_iter)
+int julia_iter(double zx, double zy, double c_re, double c_im, int max_iter)
 {
     double tmp = 0;
     int i = 0;

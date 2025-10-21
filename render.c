@@ -1,6 +1,7 @@
+/* render.c */
 #include "fractol.h"
 
-// Put a pixel in my image buffer
+/* Put a pixel in my image buffer */
 void	my_pixel_put(int x, int y, t_img *img, int color)
 {
 	int	offset;
@@ -11,68 +12,58 @@ void	my_pixel_put(int x, int y, t_img *img, int color)
 	*(unsigned int *)(img->pixels_ptr + offset) = (unsigned int)color;
 }
 
-// EASY TOGGLE BETWEEN MANDELBROT AND JULIA
-static void	mandel_vs_julia(t_complex *z, t_complex *c, t_fractal *fractal)
+/*
+** Map pixel coordinates (px,py) -> complex plane, taking zoom & offsets into account.
+** We use base ranges:
+**   re: [-2.0, 1.0]
+**   im: [-1.5, 1.5]
+*/
+static void	compute_complex_coords(int px, int py, t_fractal *f, double *out_re, double *out_im)
 {
-	if (!ft_strncmp(fractal->name, "mandelbrot", 10))
-	{
-		c->re = z->re;
-		c->im = z->im;
-	}
-	else if (!ft_strncmp(fractal->name, "julia", 5))
-	{
-		// for julia, c is constant
-		c->re = fractal->julia_re;
-		c->im = fractal->juliia_im;
-	}
+	double base_min_re = -2.0;
+	double base_max_re =  1.0;
+	double base_min_im = -1.5;
+	double base_max_im =  1.5;
+
+	/* Apply zoom around center: we shrink range by zoom factor, then shift by offsets */
+	double view_width = (base_max_re - base_min_re) / f->zoom;
+	double view_height = (base_max_im - base_min_im) / f->zoom;
+
+	double min_re = f->offset_x + ( (base_min_re + base_max_re) / 2.0 ) - view_width / 2.0;
+	double max_re = min_re + view_width;
+	double min_im = f->offset_y + ( (base_min_im + base_max_im) / 2.0 ) - view_height / 2.0;
+	double max_im = min_im + view_height;
+
+	/* map px in [0, WIDTH] -> [min_re, max_re] */
+	*out_re = map_double((double)px, 0.0, (double)WIDTH, min_re, max_re);
+	/* map py in [0, HEIGHT] -> [max_im, min_im] to invert Y (screen y grows downwards) */
+	*out_im = map_double((double)py, 0.0, (double)HEIGHT, max_im, min_im);
 }
 
-/*
- *
- * Mandelbrot
- * z = z^2 + c
- * z initially is (0,0)
- * c is the actual point
- *
- * z = z^2 + constant -> z1 = c
- *
- * Julia
- * ./fractol julia <real part> <imaginary part>
- * z = pixel_point + constant
- */
+/* Choose mandelbrot / julia iteration and draw pixel */
 static void	handle_pixel(int x, int y, t_fractal *fractal)
 {
-	t_complex	z;
-	t_complex	c;
-	int			i;
-	int			color;
+	double	c_re;
+	double	c_im;
+	int		iter;
+	int		color;
 
-	i = 0;
-	// pixel coordinate x && y scaled to fit mandel needs
-	z.re = (map_double(x, -2, +2, 0, WIDTH) * fractal->zoom)
-		+ fractal->offset_x;
-	z.im = (map_double(y, +2, -2, 0, HEIGHT) * fractal->zoom)
-		+ fractal->offset_y;
-	mandel_vs_julia(&z, &c, fractal);
-	// How many times you want to iterate z^2
-	//	+ c to check if the pointer escaped?
-	while (i < fractal->max_iter)
+	compute_complex_coords(x, y, fractal, &c_re, &c_im);
+
+	if (fractal->type == MANDELBROT)
 	{
-		// actual z^2 + c
-		// z = z^2 +c
-		z = sum_complex(square_complex(z), c);
-		// Is the value escaped???
-		// if hypotenuse > 2, I assume the point has escaped
-		if ((z.re * z.re) + (z.im * z.im) > fractal->escape_sq)
-		{
-			color = map_double(i, BLACK, WHITE, 0, fractal->max_iter);
-			my_pixel_put(x, y, &fractal->img, color);
-			return ;
-		}
-		++i;
+		/* Mandelbrot: z0 = 0 ; c = mapped point (c_re/c_im) */
+		iter = mandelbrot_iter(c_re, c_im, fractal->max_iter);
 	}
-	// We are in MANDELBROT given the iterations made
-	my_pixel_put(x, y, &fractal->img, WHITE);
+	else
+	{
+		/* Julia: z0 = mapped point ; c = constant (julia_re/julia_im) */
+		iter = julia_iter(c_re, c_im, fractal->julia_re, fractal->julia_im,
+				fractal->max_iter);
+	}
+
+	color = get_color(iter, fractal->max_iter);
+	my_pixel_put(x, y, &fractal->img, color);
 }
 
 void	fractal_render(t_fractal *fractal)
@@ -80,15 +71,16 @@ void	fractal_render(t_fractal *fractal)
 	int	x;
 	int	y;
 
-	y = -1;
-	while (++y < HEIGHT)
+	y = 0;
+	while (y < HEIGHT)
 	{
-		x = -1;
-		while (++x < WIDTH)
+		x = 0;
+		while (x < WIDTH)
 		{
 			handle_pixel(x, y, fractal);
+			++x;
 		}
+		++y;
 	}
-	mlx_put_image_to_window(fractal->mlx, fractal->win, fractal->img.img_ptr, 0,
-		0);
+	mlx_put_image_to_window(fractal->mlx, fractal->win, fractal->img.img_ptr, 0, 0);
 }

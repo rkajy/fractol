@@ -47,49 +47,72 @@ int key_handler(int keycode, t_fractal *fractal)
     return (0);
 }
 
-// int (*f)(int button, int x, int y, void *param)
-int mouse_handler(int button, int x, int y, t_fractal *fractal)
+void	compute_complex_coords(int px, int py, t_fractal *f, double *out_re, double *out_im)
 {
-    // Convert mouse coordinates to complex plane coordinates
-    double mouse_real = map_double(x, -2, +2, 0, WIDTH) * fractal->zoom + fractal->offset_x;
-    double mouse_imag = map_double(y, +2, -2, 0, HEIGHT) * fractal->zoom + fractal->offset_y;
+	double	re_min = -2.0;
+	double	re_max = 2.0;
+	double	im_min = -2.0;
+	double	im_max = 2.0;
 
-    //Zoom in (scroll up)
-    if(button == Button4)
-    {
-        // Zoom towards the mouse cursor
-        fractal->offset_x = mouse_real + (fractal->offset_x - mouse_real) * 0.95;
-        fractal->offset_y = mouse_imag + (fractal->offset_y - mouse_imag) * 0.95;
-        fractal->zoom *= 0.95;
-    }
-    //Zoom out (scroll down)
-    else if(button == Button5)
-    {
-        // Zoom away from the mouse cursor
-        fractal->offset_x = mouse_real + (fractal->offset_x - mouse_real) * 1.05;
-        fractal->offset_y = mouse_imag + (fractal->offset_y - mouse_imag) * 1.05;
-        fractal->zoom *= 1.05;
-    }
-    // Left click - center on mouse position
-    else if(button == Button1)
-    {
-        fractal->offset_x = mouse_real;
-        fractal->offset_y = mouse_imag;
-    }
+	*out_re = re_min + (px / (double)WIDTH) * (re_max - re_min);
+	*out_im = im_max - (py / (double)HEIGHT) * (im_max - im_min);
 
-    // Re-render the fractal after handling the mouse event
-    fractal_render(fractal);
-
-    return (0);
+	// Appliquer zoom et décalage
+	*out_re = *out_re * f->zoom + f->offset_x;
+	*out_im = *out_im * f->zoom + f->offset_y;
 }
 
-// track the mouse to change julia parameters dynamically
+/*
+** Gestion du zoom à la molette
+** Button4 = molette vers le haut → zoom avant
+** Button5 = molette vers le bas → zoom arrière
+**
+** L'idée :
+** - On calcule la position du curseur dans le plan complexe.
+** - On déplace les offsets pour que le zoom soit centré sur la souris.
+** - On ajuste le facteur de zoom.
+** - On redessine la fractale.
+*/
+int	mouse_handler(int button, int x, int y, t_fractal *fractal)
+{
+	double	mouse_re;
+	double	mouse_im;
+	double	zoom_factor;
+
+	if (button != Button4 && button != Button5)
+		return (0);
+	compute_complex_coords(x, y, fractal, &mouse_re, &mouse_im);
+
+	if (button == Button4)
+	{
+		/* Zoom avant (on se rapproche du curseur) */
+		zoom_factor = 1.1;
+		fractal->offset_x = mouse_re + (fractal->offset_x - mouse_re) / zoom_factor;
+		fractal->offset_y = mouse_im + (fractal->offset_y - mouse_im) / zoom_factor;
+		fractal->zoom *= zoom_factor;
+	}
+	else if (button == Button5)
+	{
+		/* Zoom arrière (on s'éloigne du curseur) */
+		zoom_factor = 1.1;
+		fractal->offset_x = mouse_re + (fractal->offset_x - mouse_re) * zoom_factor;
+		fractal->offset_y = mouse_im + (fractal->offset_y - mouse_im) * zoom_factor;
+		fractal->zoom /= zoom_factor;
+	}
+	fractal_render(fractal);
+	return (0);
+}
+
 int julia_track(int x, int y, t_fractal *fractal)
 {
-    if(!ft_strncmp(fractal->name, "julia", 5))
+    double mouse_re;
+    double mouse_im;
+
+    if (!ft_strncmp(fractal->name, "julia", 5))
     {
-        fractal->julia_re = map_double(x, -2, +2, 0, WIDTH) * fractal->zoom + fractal->offset_x;
-        fractal->juliia_im = map_double(y, +2, -2, 0, HEIGHT) * fractal->zoom + fractal->offset_y;
+        compute_complex_coords(x, y, fractal, &mouse_re, &mouse_im);
+        fractal->julia_re = mouse_re;
+        fractal->julia_im = mouse_im;
         fractal_render(fractal);
     }
     return (0);
