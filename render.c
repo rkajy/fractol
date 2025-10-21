@@ -15,14 +15,14 @@ static void mandel_vs_julia(t_complex *z, t_complex *c, t_fractal *fractal)
 {
     if(!ft_strncmp(fractal->name, "mandelbrot", 10))
     {
-        c->x = z->x;
-        c->y = z->y;
+        c->re = z->re;
+        c->im = z->im;
     }
     else if(!ft_strncmp(fractal->name, "julia", 5))
     {
         // for julia, c is constant
-        c->x = fractal->julia_x;
-        c->y = fractal->julia_y;
+        c->re = fractal->julia_x;
+        c->im = fractal->julia_y;
     }
 }
 
@@ -49,8 +49,8 @@ static  void    handle_pixel(int x, int y, t_fractal *fractal)
     i = 0;
 
     // pixel coordinate x && y scaled to fit mandel needs
-    z.x = (map(x, -2, +2, 0, WIDTH) * fractal->zoom) + fractal->shift_x;
-    z.y = (map(y, +2, -2, 0, HEIGHT) * fractal->zoom) + fractal->shift_y;
+    z.re = (map(x, -2, +2, 0, WIDTH) * fractal->zoom) + fractal->shift_x;
+    z.im = (map(y, +2, -2, 0, HEIGHT) * fractal->zoom) + fractal->shift_y;
 
     mandel_vs_julia(&z, &c, fractal);
 
@@ -63,7 +63,7 @@ static  void    handle_pixel(int x, int y, t_fractal *fractal)
 
         // Is the value escaped???
         // if hypotenuse > 2, I assume the point has escaped
-        if((z.x * z.x) + (z.y * z.y) > fractal->escape_value)
+        if((z.re * z.re) + (z.im * z.im) > fractal->escape_value)
         {
             color = map(i, BLACK, WHITE, 0, fractal->iterations_definition);
             my_pixel_put(x, y, &fractal->img, color);

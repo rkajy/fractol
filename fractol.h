@@ -6,7 +6,7 @@
 /*   By: radandri <radandri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 00:19:29 by radandri          #+#    #+#             */
-/*   Updated: 2025/10/20 23:55:55 by radandri         ###   ########.fr       */
+/*   Updated: 2025/10/21 10:11:44 by radandri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,13 @@
 #define WIDTH    800
 #define HEIGHT   800
 
+#define MANDELBROT 0
+#define JULIA 1
+
 typedef struct s_complex
 {
-    double x; // real
-    double y; // imaginary
+    double re; // real
+    double im; // imaginary
 } t_complex;
 
 // COLORS
@@ -77,6 +80,7 @@ typedef struct s_fractal
     double zoom;
     double julia_x; // real part for julia
     double julia_y; // imaginary part for julia
+    int type;
 }   t_fractal;
 
 //*** init ***
@@ -103,4 +107,8 @@ int close_handler(t_fractal *fractal);
 int julia_track(int x, int y, t_fractal *fractal);
 
 double atodouble(char *s);
+
+int get_color(int iter, int max_iter);
+
+
 #endif
