@@ -21,8 +21,8 @@ static void mandel_vs_julia(t_complex *z, t_complex *c, t_fractal *fractal)
     else if(!ft_strncmp(fractal->name, "julia", 5))
     {
         // for julia, c is constant
-        c->re = fractal->julia_x;
-        c->im = fractal->julia_y;
+        c->re = fractal->julia_re;
+        c->im = fractal->juliia_im;
     }
 }
 
@@ -49,8 +49,8 @@ static  void    handle_pixel(int x, int y, t_fractal *fractal)
     i = 0;
 
     // pixel coordinate x && y scaled to fit mandel needs
-    z.re = (map(x, -2, +2, 0, WIDTH) * fractal->zoom) + fractal->shift_x;
-    z.im = (map(y, +2, -2, 0, HEIGHT) * fractal->zoom) + fractal->shift_y;
+    z.re = (map(x, -2, +2, 0, WIDTH) * fractal->zoom) + fractal->offset_x;
+    z.im = (map(y, +2, -2, 0, HEIGHT) * fractal->zoom) + fractal->offset_y;
 
     mandel_vs_julia(&z, &c, fractal);
 

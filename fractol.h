@@ -6,7 +6,7 @@
 /*   By: radandri <radandri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 00:19:29 by radandri          #+#    #+#             */
-/*   Updated: 2025/10/21 10:25:35 by radandri         ###   ########.fr       */
+/*   Updated: 2025/10/21 10:30:01 by radandri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,11 +75,11 @@ typedef struct s_fractal
 // Hooks member variable
     double  escape_value; // hypotenuse
     int     max_iter; //value tight with the image quality and rendering speed
-    double shift_x;
-    double shift_y;
+    double offset_x;
+    double offset_y;
     double zoom;
-    double julia_x; // real part for julia
-    double julia_y; // imaginary part for julia
+    double julia_re; // real part for julia
+    double juliia_im; // imaginary part for julia
     int type;
 }   t_fractal;
 
