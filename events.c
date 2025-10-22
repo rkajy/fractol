@@ -12,9 +12,6 @@ int close_handler(t_fractal *fractal)
 
 int key_handler(int keycode, t_fractal *fractal)
 {
-    // debug: print keycode
-    printf("Key pressed: %d\n", keycode);
-
     if (keycode == XK_Escape)
         close_handler(fractal);
     else if(keycode == XK_Left)
@@ -34,15 +31,9 @@ int key_handler(int keycode, t_fractal *fractal)
         fractal->offset_y += (0.5 * fractal->zoom);
     }
     else if(keycode == XK_plus)
-    {
         fractal->max_iter += 10;
-    }
     else if(keycode == XK_minus)
-    {
         fractal->max_iter -= 10;
-    }
-
-    // Re-render the fractal after handling the key event
     fractal_render(fractal);
     return (0);
 }
@@ -82,7 +73,6 @@ int	mouse_handler(int button, int x, int y, t_fractal *fractal)
 	if (button != Button4 && button != Button5)
 		return (0);
 	compute_complex_coords(x, y, fractal, &mouse_re, &mouse_im);
-
 	if (button == Button4)
 	{
 		/* Zoom avant (on se rapproche du curseur) */
