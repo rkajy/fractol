@@ -25,39 +25,25 @@ static void	events_init(t_fractal *fractal)
 	mlx_hook(fractal->win, DestroyNotify, StructureNotifyMask,
 		close_handler, fractal);
 }
-void is_null_mlx_checker(t_fractal *fractal)
+
+void is_null_checker(t_fractal *fractal)
 {
     if (fractal->mlx == NULL)
         malloc_error();
-}
-
-void is_null_win_checker(t_fractal *fractal)
-{
-    if (fractal->win == NULL)
+    else if (fractal->win == NULL)
     {
         mlx_destroy_display(fractal->mlx);
         free(fractal->mlx);
         malloc_error();
     }
-}
-
-void is_null_img_ptr_checker(t_fractal *fractal)
-{
-    if (fractal->img.img_ptr == NULL)
+    else if (fractal->img.img_ptr == NULL)
     {
         mlx_destroy_window(fractal->mlx, fractal->win);
-        // mlx_ptr: win_ptr:
         mlx_destroy_display(fractal->mlx);
-        // mlx_ptr:
         free(fractal->mlx);
-        // ptr
         malloc_error();
     }
-}
-
-void is_null_img_pixels_ptr(t_fractal *fractal)
-{
-    if (fractal->img.pixels_ptr == NULL)
+    else if (fractal->img.pixels_ptr == NULL)
     {
         mlx_destroy_image(fractal->mlx, fractal->img.img_ptr);
         mlx_destroy_window(fractal->mlx, fractal->win);
@@ -70,20 +56,20 @@ void is_null_img_pixels_ptr(t_fractal *fractal)
 void	fractal_init(t_fractal *fractal)
 {
 	fractal->mlx = mlx_init();
-    is_null_mlx_checker(fractal);
-    fractal->win = mlx_new_window(fractal->mlx, // mlx_ptr:
-											WIDTH,                   // size_x:
-											HEIGHT,                  // size_y:
-											fractal->name            // title
+    is_null_checker(fractal);
+    fractal->win = mlx_new_window(fractal->mlx,
+											WIDTH,
+											HEIGHT,
+											fractal->name
 	);
-    is_null_win_checker(fractal);
+    is_null_checker(fractal);
     fractal->img.img_ptr = mlx_new_image(fractal->mlx, WIDTH,
 			HEIGHT);
-    is_null_img_ptr_checker(fractal);
+    is_null_checker(fractal);
     fractal->img.pixels_ptr = mlx_get_data_addr(fractal->img.img_ptr,
 			&fractal->img.bits_per_pixel, &fractal->img.line_len,
 			&fractal->img.endian);
-    is_null_img_pixels_ptr(fractal);
+    is_null_checker(fractal);
 	events_init(fractal);
 	data_init(fractal);
 }
