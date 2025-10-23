@@ -93,17 +93,3 @@ int	mouse_handler(int button, int x, int y, t_fractal *fractal)
 	return (0);
 }
 
-int julia_track(int x, int y, t_fractal *fractal)
-{
-    double mouse_re;
-    double mouse_im;
-
-    if (!ft_strncmp(fractal->name, "julia", 5))
-    {
-        compute_complex_coords(x, y, fractal, &mouse_re, &mouse_im);
-        fractal->julia_re = mouse_re;
-        fractal->julia_im = mouse_im;
-        fractal_render(fractal);
-    }
-    return (0);
-}

@@ -6,7 +6,7 @@
 /*   By: radandri <radandri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 00:19:29 by radandri          #+#    #+#             */
-/*   Updated: 2025/10/22 00:46:17 by radandri         ###   ########.fr       */
+/*   Updated: 2025/10/23 13:47:33 by radandri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,6 @@ void my_pixel_put(int x, int y, t_img *img, int color);
 int key_handler(int keycode, t_fractal *fractal);
 int mouse_handler(int button, int x, int y, t_fractal *fractal);
 int close_handler(t_fractal *fractal);
-int julia_track(int x, int y, t_fractal *fractal);
 double map_double(double val, double old_min, double old_max, double new_min, double new_max);
 t_complex sum_complex(t_complex z1, t_complex z2);
 t_complex square_complex(t_complex z);
