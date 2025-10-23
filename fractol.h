@@ -6,7 +6,7 @@
 /*   By: radandri <radandri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 00:19:29 by radandri          #+#    #+#             */
-/*   Updated: 2025/10/23 14:51:00 by radandri         ###   ########.fr       */
+/*   Updated: 2025/10/23 15:04:22 by radandri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@
 
 #define MANDELBROT 0
 #define JULIA 1
+
+#define MAX_ITER 100
 
 typedef struct s_complex
 {
@@ -101,7 +103,9 @@ int close_handler(t_fractal *fractal);
 
 double atodouble(char *s);
 
-int get_color(int iter, int max_iter);
+int get_color(int iter);
 
+int julia(double zx, double zy, double c_re, double c_im);
+int mandelbrot(double x, double y);
 
 #endif

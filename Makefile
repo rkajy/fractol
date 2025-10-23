@@ -6,7 +6,7 @@
 #    By: radandri <radandri@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/05 15:34:36 by radandri          #+#    #+#              #
-#    Updated: 2025/10/21 09:59:36 by radandri         ###   ########.fr        #
+#    Updated: 2025/10/23 14:56:27 by radandri         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,6 @@ SRC = main.c \
 		render.c \
 		math_utils.c \
 		events.c \
-		atodouble.c \
 		color.c \
 		julia.c \
 		mandelbrot.c

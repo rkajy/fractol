@@ -36,3 +36,36 @@ t_complex square_complex(t_complex z)
     return result;
 }
 
+double atodouble(char *s)
+{
+    long integer_part = 0;
+    long fractional_part = 0;
+    double pow;
+    int sign = 1;
+
+    pow = 1.0;
+    while(ft_is_space(*s))
+        s++;
+    while(*s == '+' || *s == '-')
+    {
+        if(*s == '-')
+            sign *= -1;
+        s++;
+    }
+    while(*s >= '0' && *s <= '9')
+    {
+        integer_part = (integer_part * 10) + (*s - '0');
+        s++;
+    }
+    if(*s == '.')
+    {
+        s++;
+        while(*s >= '0' && *s <= '9')
+        {
+            fractional_part = (fractional_part * 10) + (*s - '0');
+            pow *= 10;
+            s++;
+        }
+    }
+    return (double)(integer_part * sign) + (double)(fractional_part * sign) / pow;
+}

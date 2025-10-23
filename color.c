@@ -1,4 +1,4 @@
-
+#include "fractol.h"
 /*
 ** Combine les trois composantes rouge, vert et bleu
 ** dans un seul entier de type 0xRRGGBB que MiniLibX comprend.
@@ -13,16 +13,16 @@ int	create_trgb(int r, int g, int b)
 ** Si i == max_iter → point "dans" la fractale → noir.
 ** Sinon → couleur variable selon la rapidité de divergence.
 */
-int	get_color(int i, int max_iter)
+int	get_color(int i)
 {
 	double	t;
 	int		r;
 	int		g;
 	int		b;
 
-	if (i == max_iter)
+	if (i == MAX_ITER)
 		return (0x000000); // noir
-	t = (double)i / max_iter;
+	t = (double)i / MAX_ITER;
 	r = (int)(9 * (1 - t) * t * t * t * 255);
 	g = (int)(15 * (1 - t) * (1 - t) * t * t * 255);
 	b = (int)(8.5 * (1 - t) * (1 - t) * (1 - t) * t * 255);
