@@ -6,7 +6,7 @@
 /*   By: radandri <radandri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 00:19:29 by radandri          #+#    #+#             */
-/*   Updated: 2025/10/21 10:30:01 by radandri         ###   ########.fr       */
+/*   Updated: 2025/10/23 13:50:25 by radandri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,6 @@ t_complex square_complex(t_complex z);
 int key_handler(int keycode, t_fractal *fractal);
 int mouse_handler(int button, int x, int y, t_fractal *fractal);
 int close_handler(t_fractal *fractal);
-int julia_track(int x, int y, t_fractal *fractal);
 
 double atodouble(char *s);
 

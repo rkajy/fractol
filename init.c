@@ -24,8 +24,6 @@ static void	events_init(t_fractal *fractal)
 		fractal);
 	mlx_hook(fractal->win, DestroyNotify, StructureNotifyMask,
 		close_handler, fractal);
-	mlx_hook(fractal->win, MotionNotify, PointerMotionMask, julia_track,
-		fractal);
 }
 void is_null_mlx_checker(t_fractal *fractal)
 {

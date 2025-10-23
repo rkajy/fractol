@@ -83,14 +83,3 @@ int mouse_handler(int button, int x, int y, t_fractal *fractal)
     return (0);
 }
 
-// track the mouse to change julia parameters dynamically
-int julia_track(int x, int y, t_fractal *fractal)
-{
-    if(!ft_strncmp(fractal->name, "julia", 5))
-    {
-        fractal->julia_re = map(x, -2, +2, 0, WIDTH) * fractal->zoom + fractal->offset_x;
-        fractal->juliia_im = map(y, +2, -2, 0, HEIGHT) * fractal->zoom + fractal->offset_y;
-        fractal_render(fractal);
-    }
-    return (0);
-}
