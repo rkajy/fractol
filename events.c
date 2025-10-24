@@ -6,7 +6,7 @@
 /*   By: radandri <radandri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/24 21:43:19 by radandri          #+#    #+#             */
-/*   Updated: 2025/10/24 21:43:21 by radandri         ###   ########.fr       */
+/*   Updated: 2025/10/25 00:52:04 by radandri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,10 @@ int	mouse_handler(int button, int x, int y, t_fractal *fractal)
 	double	mouse_real;
 	double	mouse_imag;
 
-	mouse_real = map(x, -2, +2, 0, WIDTH) * fractal->zoom + fractal->offset_x;
-	mouse_imag = map(y, +2, -2, 0, HEIGHT) * fractal->zoom + fractal->offset_y;
+	mouse_real = map((t_values){x, -2, +2, 0, WIDTH}) * fractal->zoom
+		+ fractal->offset_x;
+	mouse_imag = map((t_values){y, +2, -2, 0, HEIGHT}) * fractal->zoom
+		+ fractal->offset_y;
 	if (button == Button4)
 	{
 		apply_zoom(fractal, mouse_real, mouse_imag, 0.95);

@@ -6,17 +6,16 @@
 /*   By: radandri <radandri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/24 22:09:46 by radandri          #+#    #+#             */
-/*   Updated: 2025/10/24 22:09:48 by radandri         ###   ########.fr       */
+/*   Updated: 2025/10/25 00:52:20 by radandri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-double	map(double unscaled_num, double new_min, double new_max, double old_min,
-		double old_max)
+double	map(t_values val)
 {
-	return ((new_max - new_min) * (unscaled_num - old_min) / (old_max - old_min)
-		+ new_min);
+	return ((val.new_max - val.new_min) * (val.unscaled_num - val.old_min)
+		/ (val.old_max - val.old_min) + val.new_min);
 }
 
 t_complex	sum_complex(t_complex z1, t_complex z2)

@@ -6,7 +6,7 @@
 /*   By: radandri <radandri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 00:21:24 by radandri          #+#    #+#             */
-/*   Updated: 2025/10/24 19:34:55 by radandri         ###   ########.fr       */
+/*   Updated: 2025/10/25 00:36:35 by radandri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ void	check_julia_parameters(char *argv[])
 	if (!is_valid_number(argv[2]) || !is_valid_number(argv[3]))
 	{
 		ft_putstr_fd("Error: Julia parameters must be numeric.\n", 2);
-		ft_putstr_fd(ERROR_MESSAGE, 2);
+		ft_putstr_fd("Please enter \n\t\"./fractol mandelbrot\" or \n\t\"", 2);
+		ft_putstr_fd("./fractol julia <re_value> <_im_value>\"\n", 2);
 		exit(EXIT_FAILURE);
 	}
 }
@@ -70,7 +71,8 @@ int	main(int argc, char *argv[])
 	}
 	else
 	{
-		ft_putstr_fd(ERROR_MESSAGE, STDERR_FILENO);
+		ft_putstr_fd("Please enter \n\t\"./fractol mandelbrot\" or \n\t\"", 2);
+		ft_putstr_fd("./fractol julia <re_value> <_im_value>\"\n", 2);
 		exit(EXIT_FAILURE);
 	}
 	return (0);

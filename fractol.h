@@ -6,7 +6,7 @@
 /*   By: radandri <radandri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 00:19:29 by radandri          #+#    #+#             */
-/*   Updated: 2025/10/25 00:26:20 by radandri         ###   ########.fr       */
+/*   Updated: 2025/10/25 00:52:46 by radandri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,19 @@
 # include <stdlib.h>       // malloc, free
 # include <unistd.h>       // write
 
-# define ERROR_MESSAGE "Please enter \n\t\"./fractol mandelbrot\" or \n\t\"./fractol julia <re_value> <_im_value>\"\n"
-
 # define WIDTH 800
 # define HEIGHT 800
 
 # define MAX_ITER 100
+
+typedef struct s_map_values
+{
+	double	unscaled_num;
+	double	new_min;
+	double	new_max;
+	double	old_min;
+	double	old_max;
+}			t_values;
 
 typedef struct s_complex
 {
@@ -62,8 +69,7 @@ typedef struct s_fractal
 
 void		fractal_init(t_fractal *fractal);
 void		fractal_render(t_fractal *fractal);
-double		map(double unscaled_num, double new_min, double new_max,
-				double old_min, double old_max);
+double		map(t_values val);
 t_complex	sum_complex(t_complex z1, t_complex z2);
 t_complex	square_complex(t_complex z);
 int			key_handler(int keycode, t_fractal *fractal);

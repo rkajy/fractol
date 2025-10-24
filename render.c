@@ -6,7 +6,7 @@
 /*   By: radandri <radandri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/24 23:26:12 by radandri          #+#    #+#             */
-/*   Updated: 2025/10/24 23:26:14 by radandri         ###   ########.fr       */
+/*   Updated: 2025/10/25 00:53:59 by radandri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,10 @@ static void	handle_pixel(int x, int y, t_fractal *fractal)
 	int			color;
 
 	iterations = 0;
-	z.re = (map(x, -2, +2, 0, WIDTH) * fractal->zoom) + fractal->offset_x;
-	z.im = (map(y, +2, -2, 0, HEIGHT) * fractal->zoom) + fractal->offset_y;
+	z.re = (map((t_values){x, -2, +2, 0, WIDTH}) * fractal->zoom)
+		+ fractal->offset_x;
+	z.im = (map((t_values){y, +2, -2, 0, HEIGHT}) * fractal->zoom)
+		+ fractal->offset_y;
 	if (!ft_strncmp(fractal->name, "mandelbrot", 10))
 	{
 		iterations = mandelbrot(z.re, z.im);
