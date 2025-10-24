@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: radandri <radandri@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/24 19:35:16 by radandri          #+#    #+#             */
+/*   Updated: 2025/10/24 22:10:34 by radandri         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fractol.h"
 
 static void	malloc_error(void)
@@ -8,69 +20,61 @@ static void	malloc_error(void)
 
 void	data_init(t_fractal *fractal)
 {
-	fractal->escape_value = 4; // 2 ^ 2, my hypotenuse
+	fractal->escape_value = 4;
 	fractal->max_iter = MAX_ITER;
 	fractal->offset_x = 0.0;
 	fractal->offset_y = 0.0;
-	// Zoom factor
 	fractal->zoom = 1.0;
 }
 
 static void	events_init(t_fractal *fractal)
 {
-	mlx_hook(fractal->win, KeyPress, KeyPressMask, key_handler,
-		fractal);
+	mlx_hook(fractal->win, KeyPress, KeyPressMask, key_handler, fractal);
 	mlx_hook(fractal->win, ButtonPress, ButtonPressMask, mouse_handler,
 		fractal);
-	mlx_hook(fractal->win, DestroyNotify, StructureNotifyMask,
-		close_handler, fractal);
+	mlx_hook(fractal->win, DestroyNotify, StructureNotifyMask, close_handler,
+		fractal);
 }
 
-void is_null_checker(t_fractal *fractal)
+void	is_null_checker(t_fractal *fractal)
 {
-    if (fractal->mlx == NULL)
-        malloc_error();
-    else if (fractal->win == NULL)
-    {
-        mlx_destroy_display(fractal->mlx);
-        free(fractal->mlx);
-        malloc_error();
-    }
-    else if (fractal->img.img_ptr == NULL)
-    {
-        mlx_destroy_window(fractal->mlx, fractal->win);
-        mlx_destroy_display(fractal->mlx);
-        free(fractal->mlx);
-        malloc_error();
-    }
-    else if (fractal->img.pixels_ptr == NULL)
-    {
-        mlx_destroy_image(fractal->mlx, fractal->img.img_ptr);
-        mlx_destroy_window(fractal->mlx, fractal->win);
-        mlx_destroy_display(fractal->mlx);
-        free(fractal->mlx);
-        malloc_error();
-    }
+	if (fractal->mlx == NULL)
+		malloc_error();
+	else if (fractal->win == NULL)
+	{
+		mlx_destroy_display(fractal->mlx);
+		free(fractal->mlx);
+		malloc_error();
+	}
+	else if (fractal->img.img_ptr == NULL)
+	{
+		mlx_destroy_window(fractal->mlx, fractal->win);
+		mlx_destroy_display(fractal->mlx);
+		free(fractal->mlx);
+		malloc_error();
+	}
+	else if (fractal->img.pixels_ptr == NULL)
+	{
+		mlx_destroy_image(fractal->mlx, fractal->img.img_ptr);
+		mlx_destroy_window(fractal->mlx, fractal->win);
+		mlx_destroy_display(fractal->mlx);
+		free(fractal->mlx);
+		malloc_error();
+	}
 }
 
 void	fractal_init(t_fractal *fractal)
 {
 	fractal->mlx = mlx_init();
-    is_null_checker(fractal);
-    fractal->win = mlx_new_window(fractal->mlx,
-											WIDTH,
-											HEIGHT,
-											fractal->name
-	);
-    is_null_checker(fractal);
-    fractal->img.img_ptr = mlx_new_image(fractal->mlx, WIDTH,
-			HEIGHT);
-    is_null_checker(fractal);
-    fractal->img.pixels_ptr = mlx_get_data_addr(fractal->img.img_ptr,
+	is_null_checker(fractal);
+	fractal->win = mlx_new_window(fractal->mlx, WIDTH, HEIGHT, fractal->name);
+	is_null_checker(fractal);
+	fractal->img.img_ptr = mlx_new_image(fractal->mlx, WIDTH, HEIGHT);
+	is_null_checker(fractal);
+	fractal->img.pixels_ptr = mlx_get_data_addr(fractal->img.img_ptr,
 			&fractal->img.bits_per_pixel, &fractal->img.line_len,
 			&fractal->img.endian);
-    is_null_checker(fractal);
+	is_null_checker(fractal);
 	events_init(fractal);
 	data_init(fractal);
 }
-

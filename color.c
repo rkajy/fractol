@@ -1,4 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   color.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: radandri <radandri@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/25 00:28:22 by radandri          #+#    #+#             */
+/*   Updated: 2025/10/25 00:28:22 by radandri         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fractol.h"
+
 /*
 ** Combine les trois composantes rouge, vert et bleu
 ** dans un seul entier de type 0xRRGGBB que MiniLibX comprend.
@@ -21,7 +34,7 @@ int	get_color(int i, int max_iter)
 	int		b;
 
 	if (i == max_iter)
-		return (0x000000); // noir
+		return (0x000000);
 	t = (double)i / max_iter;
 	t = sqrt(t);
 	r = (int)(9 * (1 - t) * t * t * t * 255);

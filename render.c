@@ -1,100 +1,60 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   render.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: radandri <radandri@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/24 23:26:12 by radandri          #+#    #+#             */
+/*   Updated: 2025/10/24 23:26:14 by radandri         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fractol.h"
 
-// Put a pixel in my image buffer
-static void my_pixel_put(int x, int y, t_img *img, int color)
+static void	my_pixel_put(int x, int y, t_img *img, int color)
 {
-    int offset;
+	int	offset;
 
-    offset = (y * img->line_len) + (x * (img->bits_per_pixel / 8));
-    *(unsigned int *)(img->pixels_ptr + offset) = color;
-
+	offset = (y * img->line_len) + (x * (img->bits_per_pixel / 8));
+	*(unsigned int *)(img->pixels_ptr + offset) = color;
 }
 
-// EASY TOGGLE BETWEEN MANDELBROT AND JULIA
-static void mandel_vs_julia(t_complex *z, t_complex *c, t_fractal *fractal)
+static void	handle_pixel(int x, int y, t_fractal *fractal)
 {
-    if(!ft_strncmp(fractal->name, "mandelbrot", 10))
-    {
-        c->re = z->re;
-        c->im = z->im;
-    }
-    else if(!ft_strncmp(fractal->name, "julia", 5))
-    {
-        // for julia, c is constant
-        c->re = fractal->julia_re;
-        c->im = fractal->julia_im;
-    }
-}
+	t_complex	z;
+	int			iterations;
+	int			color;
 
-/*
- *
- * Mandelbrot
- * z = z^2 + c
- * z initially is (0,0)
- * c is the actual point
- * 
- * z = z^2 + constant -> z1 = c
- * 
- * Julia
- * ./fractol julia <real part> <imaginary part>
- * z = pixel_point + constant
- */
-static  void    handle_pixel(int x, int y, t_fractal *fractal)
-{
-    t_complex z;
-    t_complex c;
-    int i;
-    int color;
-
-    i = 0;
-
-    // pixel coordinate x && y scaled to fit mandel needs
-    z.re = (map(x, -2, +2, 0, WIDTH) * fractal->zoom) + fractal->offset_x;
-    z.im = (map(y, +2, -2, 0, HEIGHT) * fractal->zoom) + fractal->offset_y;
-
-    mandel_vs_julia(&z, &c, fractal);
-
-    // How many times you want to iterate z^2 + c to check if the pointer escaped?
-    while(i < fractal->max_iter)
-    {
-        //actual z^2 + c
-        // z = z^2 +c
-        z = sum_complex(square_complex(z), c);
-
-        // Is the value escaped???
-        // if hypotenuse > 2, I assume the point has escaped
-        if((z.re * z.re) + (z.im * z.im) > fractal->escape_value)
-        {
-            color = get_color(i,fractal->max_iter);
-            my_pixel_put(x, y, &fractal->img, color);
-            return;
-        }
-        ++i;
-    }
-    // We are in MANDELBROT given the iterations made
-    my_pixel_put(x, y, &fractal->img, WHITE);
-
+	iterations = 0;
+	z.re = (map(x, -2, +2, 0, WIDTH) * fractal->zoom) + fractal->offset_x;
+	z.im = (map(y, +2, -2, 0, HEIGHT) * fractal->zoom) + fractal->offset_y;
+	if (!ft_strncmp(fractal->name, "mandelbrot", 10))
+	{
+		iterations = mandelbrot(z.re, z.im);
+	}
+	else if (!ft_strncmp(fractal->name, "julia", 5))
+	{
+		iterations = julia(z.re, z.im, fractal->julia_re, fractal->julia_im);
+	}
+	color = get_color(iterations, fractal->max_iter);
+	my_pixel_put(x, y, &fractal->img, color);
 }
 
 void	fractal_render(t_fractal *fractal)
 {
-    int x;
-    int y;
+	int	x;
+	int	y;
 
-    y = -1;
-    while (++y < HEIGHT)
-    {
-        x = -1;
-        while(++x < WIDTH)
-        {
-            handle_pixel(x, y, fractal);
-        }
-    }
-    mlx_put_image_to_window(
-        fractal->mlx,
-        fractal->win,
-        fractal->img.img_ptr,
-        0,
-        0
-    );
+	y = -1;
+	while (++y < HEIGHT)
+	{
+		x = -1;
+		while (++x < WIDTH)
+		{
+			handle_pixel(x, y, fractal);
+		}
+	}
+	mlx_put_image_to_window(fractal->mlx, fractal->win, fractal->img.img_ptr, 0,
+		0);
 }

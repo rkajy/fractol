@@ -6,7 +6,7 @@
 /*   By: radandri <radandri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 22:55:01 by radandri          #+#    #+#             */
-/*   Updated: 2025/10/23 14:55:28 by radandri         ###   ########.fr       */
+/*   Updated: 2025/10/24 23:12:57 by radandri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,6 @@ void				ft_lstdelone(t_list *lst, void (*del)(void *));
 void				ft_lstclear(t_list **lst, void (*del)(void *));
 void				ft_lstiter(t_list *lst, void (*f)(void *));
 int					ft_is_space(char c);
+double				atodouble(const char *s);
+
 #endif
