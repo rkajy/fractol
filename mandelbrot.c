@@ -12,6 +12,22 @@
 
 #include "fractol.h"
 
+/*
+**
+** Iterates z = z² + c for each pixel of the complex plane.
+** Here, c = pixel coordinate, and z starts at 0.
+**
+** Formula:
+**    Re(zₙ₊₁) = Re(zₙ)² - Im(zₙ)² + Re(c)
+**    Im(zₙ₊₁) = 2 * Re(zₙ) * Im(zₙ) + Im(c)
+**
+** where z starts at (0, 0) and c = (x, y) is the pixel point.
+**
+** Iterates:
+**     zₙ₊₁ = zₙ² + c
+** until |z|² > 4 or MAX_ITER is reached.
+** Diverges when |z|² > 4 or max iteration reached.
+*/
 int	mandelbrot(double x, double y)
 {
 	double	zx;

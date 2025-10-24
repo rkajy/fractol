@@ -22,9 +22,11 @@ int	create_trgb(int r, int g, int b)
 }
 
 /*
-** Calcule une couleur dégradée selon le nombre d’itérations (i)
-** Si i == max_iter → point "dans" la fractale → noir.
-** Sinon → couleur variable selon la rapidité de divergence.
+**
+** Maps iteration count to a gradient color.
+**
+** Points that diverge slowly get warmer tones.
+** Points that never diverge are colored black.
 */
 int	get_color(int i, int max_iter)
 {

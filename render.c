@@ -6,7 +6,7 @@
 /*   By: radandri <radandri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/24 23:26:12 by radandri          #+#    #+#             */
-/*   Updated: 2025/10/25 00:53:59 by radandri         ###   ########.fr       */
+/*   Updated: 2025/10/25 01:22:13 by radandri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,14 @@ static void	handle_pixel(int x, int y, t_fractal *fractal)
 	my_pixel_put(x, y, &fractal->img, color);
 }
 
+/*
+**
+** Iterates over all pixels and maps (x, y) to
+** complex coordinates (re, im).
+**
+** Computes the iteration count using the selected fractal
+** and colors each pixel accordingly.
+*/
 void	fractal_render(t_fractal *fractal)
 {
 	int	x;

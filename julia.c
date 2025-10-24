@@ -12,6 +12,17 @@
 
 #include "fractol.h"
 
+/*
+**
+** Iterates z = z² + c for each pixel to test divergence.
+** Here, c is a constant (given as arguments).
+** 
+** Formula:
+**    Re(zₙ₊₁) = Re(zₙ)² - Im(zₙ)² + c_re
+**    Im(zₙ₊₁) = 2 * Re(zₙ) * Im(zₙ) + c_im
+**
+** Divergence occurs when |z|² > 4 or max iteration reached.
+*/
 int	julia(double zx, double zy, double c_re, double c_im)
 {
 	double	tmp;
