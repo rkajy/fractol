@@ -6,7 +6,7 @@
 /*   By: radandri <radandri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 00:19:29 by radandri          #+#    #+#             */
-/*   Updated: 2025/10/24 17:37:01 by radandri         ###   ########.fr       */
+/*   Updated: 2025/10/24 18:45:35 by radandri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int close_handler(t_fractal *fractal);
 
 double atodouble(char *s);
 
-int get_color(int iter);
+int get_color(int iter, int max_iter);
 
 int julia(double zx, double zy, double c_re, double c_im);
 int mandelbrot(double x, double y);

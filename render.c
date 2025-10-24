@@ -65,7 +65,7 @@ static  void    handle_pixel(int x, int y, t_fractal *fractal)
         // if hypotenuse > 2, I assume the point has escaped
         if((z.re * z.re) + (z.im * z.im) > fractal->escape_value)
         {
-            color = map(i, BLACK, WHITE, 0, fractal->max_iter);
+            color = get_color(i,fractal->max_iter);
             my_pixel_put(x, y, &fractal->img, color);
             return;
         }
