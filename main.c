@@ -6,7 +6,7 @@
 /*   By: radandri <radandri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 00:21:24 by radandri          #+#    #+#             */
-/*   Updated: 2025/10/21 10:28:36 by radandri         ###   ########.fr       */
+/*   Updated: 2025/10/24 15:51:54 by radandri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,16 @@ int	main(int argc, char *argv[])
 	if ((2 == argc && !ft_strncmp(argv[1], "mandelbrot", 10)) || (4 == argc
 			&& !ft_strncmp(argv[1], "julia", 5)))
 	{
-        fractal.name = argv[1];
+		fractal.name = argv[1];
 		if (4 == argc && !ft_strncmp(argv[1], "julia", 5))
 		{
 			fractal.julia_re = atodouble(argv[2]);
 			fractal.juliia_im = atodouble(argv[3]);
 		}
 		fractal_init(&fractal);
-        fractal_render(&fractal);
-        mlx_loop(fractal.mlx);
-	
-    }
+		fractal_render(&fractal);
+		mlx_loop(fractal.mlx);
+	}
 	else
 	{
 		ft_putstr_fd(ERROR_MESSAGE, STDERR_FILENO);
@@ -37,5 +36,3 @@ int	main(int argc, char *argv[])
 	}
 	return (0);
 }
-
-// gcc *c -Lminilibx -lmlx -lX11 -lXext libft/libft.a -o fractol

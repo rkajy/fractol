@@ -6,17 +6,17 @@
 #    By: radandri <radandri@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/05 15:34:36 by radandri          #+#    #+#              #
-#    Updated: 2025/10/23 14:56:27 by radandri         ###   ########.fr        #
+#    Updated: 2025/10/24 15:49:47 by radandri         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fractol
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -Ofast -ffast-math -march=native -funroll-loops -mtune=native -O3 -mavx2 -mfma
+CFLAGS = -Wall -Wextra -Werror
 
 LIBFT_DIR = libft/
 MINILIBX_DIR = minilibx/
-INCLUDES = -I include/ -I $(LIBFT_DIR) -I $(MINILIBX_DIR)include/
+INCLUDES = -I . -I $(LIBFT_DIR) -I $(MINILIBX_DIR)
 
 SRC = main.c \
 		init.c \
@@ -36,7 +36,7 @@ LIBS = -L$(MINILIBX_DIR) -lmlx -lXext -lX11 -lm
 all: $(MINILIBX_DIR) $(NAME) 
 
 $(NAME): $(OBJ) $(LIBFT) $(MINILIBX_LIB)
-	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(MINILIBX_LIB) -o $(NAME) $(LIBS)
+	$(CC) $(CFLAGS) $(INCLUDES) $(OBJ) $(LIBFT) $(LIBS) -o $(NAME)
 
 %.o: %.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
@@ -65,4 +65,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean
+.PHONY: all clean fclean re
