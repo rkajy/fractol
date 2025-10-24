@@ -6,7 +6,7 @@
 /*   By: radandri <radandri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 00:19:29 by radandri          #+#    #+#             */
-/*   Updated: 2025/10/23 15:04:22 by radandri         ###   ########.fr       */
+/*   Updated: 2025/10/24 17:37:01 by radandri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 #include <stdio.h> // perror
 #include <X11/X.h> // KeyPress, KeyRelease, etc.
 
-#define ERROR_MESSAGE "Please enter \n\t\"./fractol mandelbrot\" or \n\t\"./fractol julia <value_1> <value_2>\"\n"
+#define ERROR_MESSAGE "Please enter \n\t\"./fractol mandelbrot\" or \n\t\"./fractol julia <re_value> <_im_value>\"\n"
 
 // we use a square to keep the rendering math simple
 #define WIDTH    800
@@ -81,7 +81,7 @@ typedef struct s_fractal
     double offset_y;
     double zoom;
     double julia_re; // real part for julia
-    double juliia_im; // imaginary part for julia
+    double julia_im; // imaginary part for julia
     int type;
 }   t_fractal;
 

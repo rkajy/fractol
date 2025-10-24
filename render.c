@@ -22,7 +22,7 @@ static void mandel_vs_julia(t_complex *z, t_complex *c, t_fractal *fractal)
     {
         // for julia, c is constant
         c->re = fractal->julia_re;
-        c->im = fractal->juliia_im;
+        c->im = fractal->julia_im;
     }
 }
 

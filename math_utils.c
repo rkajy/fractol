@@ -1,11 +1,5 @@
 #include "fractol.h"
 
-double scale(double unscaled_num, double new_min, double new_max, double old_min, double old_max)
-{
-    (void)old_max;
-    return (new_max - new_min) * (unscaled_num - old_min);
-}
-
 /*
  * [0..799] -> [-2..+2]
  *
@@ -36,36 +30,33 @@ t_complex square_complex(t_complex z)
     return result;
 }
 
-double atodouble(char *s)
+double	atodouble(char *s)
 {
-    long integer_part = 0;
-    long fractional_part = 0;
-    double pow;
-    int sign = 1;
+	long	int_part;
+	long	frac_part;
+	double	div;
+	int		sign;
 
-    pow = 1.0;
-    while(ft_is_space(*s))
-        s++;
-    while(*s == '+' || *s == '-')
-    {
-        if(*s == '-')
-            sign *= -1;
-        s++;
-    }
-    while(*s >= '0' && *s <= '9')
-    {
-        integer_part = (integer_part * 10) + (*s - '0');
-        s++;
-    }
-    if(*s == '.')
-    {
-        s++;
-        while(*s >= '0' && *s <= '9')
-        {
-            fractional_part = (fractional_part * 10) + (*s - '0');
-            pow *= 10;
-            s++;
-        }
-    }
-    return (double)(integer_part * sign) + (double)(fractional_part * sign) / pow;
+	int_part = 0;
+	frac_part = 0;
+	div = 1.0;
+	sign = 1;
+	while (ft_is_space(*s))
+		s++;
+	if (*s == '-' || *s == '+')
+		sign = (*s++ == '-') ? -1 : 1;
+	while (*s >= '0' && *s <= '9')
+		int_part = int_part * 10 + (*s++ - '0');
+	if (*s == '.')
+	{
+		s++;
+		while (*s >= '0' && *s <= '9')
+		{
+			frac_part = frac_part * 10 + (*s++ - '0');
+			div *= 10.0;
+		}
+	}
+	return (sign * (int_part + (frac_part / div)));
 }
+
+
